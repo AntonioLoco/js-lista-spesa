@@ -2,33 +2,80 @@
 
 // DATI
 const shoppingList = document.querySelector(".shopping-list");
-console.log(shoppingList);
+const userProduct = document.getElementById("user-product");
+const btnAdd = document.getElementById("btn-add");
+const btnRemove = document.getElementById("btn-remove");
+const btnCancel = document.getElementById("btn-cancel");
+
+
 
 // Creo la lista della spesa
-const listaSpesa = [
-    "pane",
-    "acqua",
-    "biscotti",
-    "latte",
-    "pasta",
-    "pomodori"
-];
-console.log(listaSpesa);
-
-
-// ELABORAZIONE
-// Stampo 
+let productList = [];
 let i = 0;
+const listItem = document.createElement("div");
+listItem.classList.add("list-item");
 
-while( i < listaSpesa.length){
-    // Prendo il valore corrente
-    const thisElement = listaSpesa[i];
+// Button aggiungi
+btnAdd.addEventListener("click", function(){
+    // Prendo il valore dell input
+    const userProductValue = userProduct.value.trim();
+    if(userProductValue !== ""){
+        productList.push(userProductValue);
+        console.log(productList);
+        while( i < productList.length){
+            // Prendo il valore corrente
+            const thisElement = productList[i];
+        
+            // Creo l'elemento che andrà nella lista
+            const listItem = document.createElement("li");
+            const textItem = document.createTextNode(thisElement);
+            listItem.appendChild(textItem);
+            listItem.classList.add("list-item");
+        
+            // Aggiungo l'elemento nella lista
+            shoppingList.appendChild(listItem);
 
-    // Creo l'elemento che andrà nella lista
-    const listItem = `<li class="list-item">${thisElement}</li>`;
+            // Svuoto il campo di input
+            userProduct.value = "";
+        
+            i++;
+        }
 
-    // Aggiungo l'elemento nella lista
-    shoppingList.innerHTML += listItem;
+    } else {
+        alert("Inserisci un prodotto!!!");
+        userProduct.value = "";
+    }
+});
 
-    i++;
-}
+// Button Rimuovi
+btnRemove.addEventListener("click", function(){
+    if(productList.length > 0){
+        // togliamolo dall'array
+        productList.pop();
+        console.log(productList);
+
+        i--;
+
+        //rimuovo l'elemento dalla pagina
+        shoppingList.removeChild(shoppingList.lastElementChild);
+    } else {
+        alert("La lista è gia vuota");
+    }
+});
+
+// Button Annulla
+btnCancel.addEventListener("click", function(){
+    // Svuoto la lista
+    productList = [];
+    console.log(productList);
+
+    // Svuoto il campo di input
+    userProduct.value = "";
+
+    while( i >= 0){
+        //rimuovo l'elemento dalla pagina
+        shoppingList.removeChild(shoppingList.lastElementChild);
+
+        i--;
+    }
+});
