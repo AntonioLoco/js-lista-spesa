@@ -12,8 +12,6 @@ const btnCancel = document.getElementById("btn-cancel");
 // Creo la lista della spesa
 let productList = [];
 let i = 0;
-const listItem = document.createElement("div");
-listItem.classList.add("list-item");
 
 // Button aggiungi
 btnAdd.addEventListener("click", function(){
